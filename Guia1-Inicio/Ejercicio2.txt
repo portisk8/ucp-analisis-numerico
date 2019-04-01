@@ -1,0 +1,12 @@
+DO
+    i = i + 1
+    if z <= 50 then:
+        x = x + 5
+        if x > 5 then:
+            y = x
+        else:
+            y = 0
+        enfif
+        z = x + y
+    endif
+enddo

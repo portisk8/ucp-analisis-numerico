@@ -1,0 +1,14 @@
+x = Leer();
+if x >= 10 then {
+    hacer{
+        x = x - 5;
+    } hasta (x < 50)
+}
+else{
+    if x < 5 then {
+        x = 5
+    }
+    else {
+        x = 7.5
+    }
+}

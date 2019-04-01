@@ -1,0 +1,44 @@
+Los comentarios de este pseudocodigo se realizaran igual que en python "#"
+
+DO
+    #PASO1
+    clave = Leer()
+    cursoNombre = Leer()
+
+    #PASO2
+    C = Leer()
+    T = Leer()
+    E = Leer()
+
+    #PASO3
+    cuestionarioPuntaje = 0
+    cuestionarioCont = 0
+    while NOT EOF do:
+        cuestionarioPuntaje = cuestionarioPuntaje + Leer()
+        cuestionarioCont = cuestionarioCont + 1
+    EndWhile
+    PC = cuestionarioPuntaje / cuestionarioCont
+
+    #PASO4
+    tareaPuntaje = 0
+    tareaCont = 0
+    while NOT EOF do:
+        tareaPuntaje = tareaPuntaje + Leer()
+        tareaCont = tareaCont + 1
+    EndWhile
+    PT = tareaPuntaje / tareaCont
+    
+    #PASO5
+    if tieneCalificacionFinal then:
+        #PASO6
+        F = Leer()
+        #PASO7
+        CP = (((C * PC) + ( T * PT) + (E * F)) / ( C + T + E)) * 100
+    else:
+        #PASO9
+        CP = (((C * PC) + ( T * PT)) / ( C + T)) * 100
+    EndIf
+
+    #PASO10
+    Imprimir(clave,cursoNombre,CP)
+EndDO
