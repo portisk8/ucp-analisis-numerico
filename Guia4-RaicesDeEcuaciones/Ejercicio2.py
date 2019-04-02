@@ -1,17 +1,19 @@
 from MetodoCerrado import MetodoCerrado
 from matplotlib import pyplot
+import math
 
-
-var = input("Ingrese funcion polinómica: Ej: -0.5 * x**2 + 2.5 * x + 4.5 \n>>> ")
-xl = float(input("Ingrese xl:\n>>> "))
-xu = float(input("Ingrese xu:\n>>> "))
-iteraciones = int(input("Ingrese cantidad de iteraciones:\n>>> "))
-if(iteraciones == 0):
-    iteraciones = None
+var = input(
+    "Ingrese funcion polinómica: Ej: 5 * x**3 - 5 * x**2 + 6 * x - 2 \n>>> ")
+xl = float(input("Ingrese xl: Ej: 0\n>>> "))
+xu = float(input("Ingrese xu: Ej: 1\n>>> "))
+es = float(input("Ingrese porcentaje de error tolerable:\n>>> "))
 
 mc = MetodoCerrado(var, xl, xu)
-for i in range(0, iteraciones):
+mc.getRaicesByBiseccion()
+n = len(mc.valores)-1
+while (mc.valores[n]['error'] == None or math.fabs(mc.valores[n]['error']) > es):
     mc.getRaicesByBiseccion()
+    n = len(mc.valores)-1
 # print(str(valores))
 mc.showResults()
 

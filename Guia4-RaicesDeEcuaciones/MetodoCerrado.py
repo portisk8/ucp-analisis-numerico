@@ -26,24 +26,31 @@ class MetodoCerrado(object):
         else:
             return None
 
-    def getRaicesByBiseccion(self, iteracion=None):
-        if(iteracion != None):
-            for i in range(0, iteracion):
-                self.xr = self.getXRByBiseccion()
-                ea = self.calcularErrorAproximado()
-                self.valores.append(
-                    {"xl": self.xl, "xu": self.xu, "xr": self.xr, "error": ea})
-                fdex = self.funcion.subs({'x': self.xr})
-                if(fdex > 0):
-                    self.xl = self.xr
-                else:
-                    self.xu = self.xr
+    def getRaicesByBiseccion(self):
+        self.xr = self.getXRByBiseccion()
+        ea = self.calcularErrorAproximado()
+        self.valores.append(
+            {"xl": self.xl, "xu": self.xu, "xr": self.xr, "error": ea})
+        fdex = self.funcion.subs({'x': self.xr})
+        # Averiguo el grado de la funcion
+        degree = sympy.degree(self.funcion)
+        pendiente = 0
+        if(degree == 2):  # Si es 2 calculo la segunda derivada para conocer la pendiente
+            pendiente = sympy.diff(sympy.diff(self.funcion))
+        if((fdex > 0 and pendiente == 0) or (fdex < 0 and pendiente < 0)):
+            self.xu = self.xr
         else:
-            self.xr = self.getXRByBiseccion()
-            ea = self.calcularErrorAproximado()
-            self.valores.append(
-                {"xl": self.xl, "xu": self.xu, "xr": self.xr, "error": ea})
+            self.xl = self.xr
         return self.valores
 
     def getRaicesByFalsaPosicion(self, iteracion):
         pass
+
+    def showResults(self):
+        print("| {0:<9} |{1:^20} |{2:^20} |{3:^20} |{4:^20}".format(
+            "Iteracion", "xl", "xu ", "xr", "error"))
+        print("|{0:<11}|{1:^21}|{2:^21}|{3:^21}|{4:^20}".format(
+            "-----------", "---------------------", "---------------------", "---------------------", "---------------------"))
+        for i, v in enumerate(self.valores):
+            print("| {0:<9} |{1:>20} |{2:>20} |{3:>20} |{4:>20}".format(
+                str(i), str(v['xl']), str(v['xu']), str(v['xr']), str(v['error'])))
