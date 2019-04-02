@@ -58,14 +58,23 @@ print("--------------------------------------")
 print('---------------------------------------')
 print('----------EJERCICIO 4----------')
 print('----------ROOT = 1.419----------')
-var = "0.7 - ln(x**2)"
+print("-------- METODO BISECCION ---------")
+var = '0.7 - ln(x**2)'
 xl = 0.5
 xu = 2
-iteraciones = 10
+iteraciones = 3
 mc = MetodoCerrado(var, xl, xu)
 for i in range(0, iteraciones):
     mc.metodoBiseccion()
 # print(str(valores))
 mc.showResults()
+print('---------------------------------------')
+print('----------ROOT = 1.419----------')
+print("-------- METODO FALSA POSICION -------")
+# REVISAR porque funciona en el Ejercicio4 pero no en este archivo... >_<
+# fp4 = MetodoCerrado(var, xl, xu)
+# for i in range(0, iteraciones):
+#     fp4.metodoFalsaPosicion()
+# fp4.showResults()
 print('---------------------------------------')
 print('----------EJERCICIO 5----------')
