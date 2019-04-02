@@ -3,8 +3,8 @@ from matplotlib import pyplot
 
 
 var = input("Ingrese funcion polinómica: Ej: -0.5 * x**2 + 2.5 * x + 4.5 \n>>> ")
-xl = float(input("Ingrese xl:\n>>> "))
-xu = float(input("Ingrese xu:\n>>> "))
+xl = float(input("Ingrese xl:Ej: 6\n>>> "))
+xu = float(input("Ingrese xu: Ej: 7\n>>> "))
 iteraciones = int(input("Ingrese cantidad de iteraciones:\n>>> "))
 if(iteraciones == 0):
     iteraciones = None

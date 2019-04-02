@@ -3,6 +3,7 @@
     Basandose en el metodo cerrado para una variable
 '''
 import sympy
+from sympy.plotting import plot
 
 
 class MetodoCerrado(object):
@@ -16,7 +17,7 @@ class MetodoCerrado(object):
         self.x = sympy.symbols('x', real=True)
 
     def getXRByBiseccion(self):
-        return (self.xl + self.xu) / 2
+        return (self.xl + self.xu) * 0.5
 
     def calcularErrorAproximado(self):
         n = len(self.valores)
@@ -32,12 +33,8 @@ class MetodoCerrado(object):
         self.valores.append(
             {"xl": self.xl, "xu": self.xu, "xr": self.xr, "error": ea})
         fdex = self.funcion.subs({'x': self.xr})
-        # Averiguo el grado de la funcion
-        degree = sympy.degree(self.funcion)
-        pendiente = 0
-        if(degree == 2):  # Si es 2 calculo la segunda derivada para conocer la pendiente
-            pendiente = sympy.diff(sympy.diff(self.funcion))
-        if((fdex > 0 and pendiente == 0) or (fdex < 0 and pendiente < 0)):
+        fdexl = self.funcion.subs({'x': self.xl})
+        if(fdexl*fdex <= 0):
             self.xu = self.xr
         else:
             self.xl = self.xr
@@ -54,3 +51,7 @@ class MetodoCerrado(object):
         for i, v in enumerate(self.valores):
             print("| {0:<9} |{1:>20} |{2:>20} |{3:>20} |{4:>20}".format(
                 str(i), str(v['xl']), str(v['xu']), str(v['xr']), str(v['error'])))
+
+    def plotLog(self):
+        p = plot(self.funcion)
+        return p
