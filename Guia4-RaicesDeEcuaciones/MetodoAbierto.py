@@ -4,19 +4,23 @@ from sympy.abc import x
 
 
 class MetodoAbierto(object):
-    "Clase Que usa Metodos de Punto Fijo y Newton-Raphson para hallar la raiz de una funcíon por aproximación"
+    "Clase Que usa Metodos de [1]Punto Fijo y [2]Newton-Raphson para hallar la raiz de una funcíon por aproximación"
 
-    def __init__(self, funcionF, funcionG, xi):
+    metodos = {1: {'key': 1, 'value': 'Método Punto Fijo'},
+               2: {'key': 1, 'value': 'Método Newton-Raphson'}}
+
+    def __init__(self, funcionF, xi, metodo=None):
         "Funcion: str, xl: float, xu:float"
         self.funcionF = sympy.sympify(
             funcionF)
-        self.funcionG = sympy.sympify(
-            funcionG)
         self.xi = xi
         self.xf = None
         self.xr = None
         self.valores = []
-        self.x = sympy.symbols('x', real=True)
+        try:
+            self.metodo = self.metodos[metodo]
+        except:
+            pass
 
     def calcularErrorAproximado(self):
         n = len(self.valores)
@@ -33,12 +37,18 @@ class MetodoAbierto(object):
         self.valores.append(
             {"xi": self.xi, "xf": self.xf, "xr": self.xr, "error": ea})
         self.xi = self.xf
-
         return self.valores
 
     def metodoPuntoFijo(self):
         "Implementa el método de Punto Fijo"
-        self.xf = self.funcionG.subs({'x': self.xi}).evalf()
+        self.xf = self.funcionF.subs({'x': self.xi}).evalf()
+        return self.evaluar()
+
+    def metodoNewtonRaphson(self):
+        "Implementa el método de Newton-Raphson"
+        numerador = self.funcionF.subs({'x': self.xi}).evalf()
+        denominador = sympy.diff(self.funcionF).subs({'x': self.xi}).evalf()
+        self.xf = self.xi - (numerador/denominador)
         return self.evaluar()
 
     def showResults(self):
@@ -58,3 +68,16 @@ class MetodoAbierto(object):
     def plotLog(self):
         p = plot(self.funcion)
         return p
+
+    def printMetodo(self):
+        print(self.metodo['value'])
+
+    def aplicarMetodo(self):
+        "Si se definió previamente el metodo en el constructor"
+        try:
+            if(self.metodo['key'] == 1):
+                return self.metodoPuntoFijo()
+            elif(self.metodo['key'] == 2):
+                return self.metodoNewtonRaphson()
+        except:
+            pass
