@@ -22,6 +22,8 @@ class MetodoAbierto(object):
         n = len(self.valores)
         if(n > 0):
             error = ((self.xf - self.valores[n-1]['xi']) / self.xf) * 100
+            if((error > 10 and n > 100) or (n > 100)):
+                raise Exception('Error, Iteracion muy alta y/o Error muy alto')
             return error
         else:
             return None
@@ -31,6 +33,7 @@ class MetodoAbierto(object):
         self.valores.append(
             {"xi": self.xi, "xf": self.xf, "xr": self.xr, "error": ea})
         self.xi = self.xf
+
         return self.valores
 
     def metodoPuntoFijo(self):
@@ -46,6 +49,11 @@ class MetodoAbierto(object):
         for i, v in enumerate(self.valores):
             print("| {0:<9} |{1:>20} |{2:>20} |{3:>20}".format(
                 str(i), str(v['xi']), str(v['xf']), str(v['error'])))
+
+    def showIndex(self, index):
+        v = self.valores[index]
+        print("| {0:<9} |{1:>20} |{2:>20} |{3:>20}".format(
+            str(index), str(v['xi']), str(v['xf']), str(v['error'])))
 
     def plotLog(self):
         p = plot(self.funcion)
