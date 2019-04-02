@@ -9,10 +9,10 @@ xu = float(input("Ingrese xu: Ej: 1\n>>> "))
 es = float(input("Ingrese porcentaje de error tolerable:\n>>> "))
 
 mc = MetodoCerrado(var, xl, xu)
-mc.getRaicesByBiseccion()
+mc.metodoBiseccion()
 n = len(mc.valores)-1
 while (mc.valores[n]['error'] == None or math.fabs(mc.valores[n]['error']) > es):
-    mc.getRaicesByBiseccion()
+    mc.metodoBiseccion()
     n = len(mc.valores)-1
 # print(str(valores))
 mc.showResults()

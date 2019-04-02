@@ -11,7 +11,7 @@ if(iteraciones == 0):
 
 mc = MetodoCerrado(var, xl, xu)
 for i in range(0, iteraciones):
-    mc.getRaicesByBiseccion()
+    mc.metodoBiseccion()
 # print(str(valores))
 mc.showResults()
 

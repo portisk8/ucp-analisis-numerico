@@ -19,6 +19,12 @@ class MetodoCerrado(object):
     def getXRByBiseccion(self):
         return (self.xl + self.xu) * 0.5
 
+    def getXRByFalsaPosicion(self):
+        numerador = self.funcion.subs({'x': self.xu}) * (self.xl - self.xu)
+        denominador = self.funcion.subs(
+            {'x': self.xl}) - self.funcion.subs({'x': self.xu})
+        return self.xu - (numerador / denominador)
+
     def calcularErrorAproximado(self):
         n = len(self.valores)
         if(n > 0):
@@ -27,8 +33,7 @@ class MetodoCerrado(object):
         else:
             return None
 
-    def getRaicesByBiseccion(self):
-        self.xr = self.getXRByBiseccion()
+    def evaluarXR(self):
         ea = self.calcularErrorAproximado()
         self.valores.append(
             {"xl": self.xl, "xu": self.xu, "xr": self.xr, "error": ea})
@@ -40,8 +45,15 @@ class MetodoCerrado(object):
             self.xl = self.xr
         return self.valores
 
-    def getRaicesByFalsaPosicion(self, iteracion):
-        pass
+    def metodoBiseccion(self):
+        "Implementa el método de Biseccion"
+        self.xr = self.getXRByBiseccion()
+        return self.evaluarXR()
+
+    def metodoFalsaPosicion(self):
+        "Implementa el método de Falsa Posicion"
+        self.xr = self.getXRByFalsaPosicion()
+        return self.evaluarXR()
 
     def showResults(self):
         print("| {0:<9} |{1:^20} |{2:^20} |{3:^20} |{4:^20}".format(
