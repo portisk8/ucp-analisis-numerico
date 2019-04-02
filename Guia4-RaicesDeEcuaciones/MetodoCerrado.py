@@ -1,14 +1,12 @@
-''' 
-    Clase para hallar raices mediante funciones utilizando libreria sympy
-    Basandose en el metodo cerrado para una variable
-'''
 import sympy
 from sympy.plotting import plot
 
 
 class MetodoCerrado(object):
+    "Clase Que usa Metodos de Biseccion y Falsa Posicion para hallar la raiz de una funcíon por aproximación"
 
     def __init__(self, funcion, xl, xu):
+        "Funcion: str, xl: float, xu:float"
         self.funcion = sympy.sympify(funcion)
         self.xl = xl
         self.xu = xu
