@@ -7,7 +7,7 @@ class MetodoAbierto(object):
     "Clase Que usa Metodos de [1]Punto Fijo y [2]Newton-Raphson para hallar la raiz de una funcíon por aproximación"
 
     metodos = {1: {'key': 1, 'value': 'Método Punto Fijo'},
-               2: {'key': 1, 'value': 'Método Newton-Raphson'}}
+               2: {'key': 2, 'value': 'Método Newton-Raphson'}}
 
     def __init__(self, funcionF, xi, metodo=None):
         "Funcion: str, xl: float, xu:float"

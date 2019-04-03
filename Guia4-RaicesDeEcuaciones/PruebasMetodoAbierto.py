@@ -54,3 +54,21 @@ try:
 except Exception as error:
     print("[Error] > {}\n No converge en un punto".format(error))
 print('---------------------------------------')
+print('----------EJERCICIO 7----------')
+print('----------ROOT = 8.03----------')
+print("-------- METODO NEWTON-RAPHSON -------")
+f = '(1 + 4 * x**2 - 0.5 * x **3)/5.5'
+xi = 2
+tolerancia = 0.01
+ma = MetodoAbierto(f, xi, 2)
+ma.aplicarMetodo()
+n = len(ma.valores)-1
+try:
+    while (ma.valores[n]['error'] == None or math.fabs(ma.valores[n]['error']) > tolerancia):
+        ma.aplicarMetodo()
+        n = len(ma.valores)-1
+    # print(str(valores))
+    ma.showResults()
+except Exception as error:
+    print("[Error] > {}\n No converge en un punto".format(error))
+print('---------------------------------------')
