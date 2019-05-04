@@ -10,8 +10,8 @@ texp = [] #Tiempo experimental
 Vexp = [] #Voltaje experimental
 
 def evaluarTEnModelo(t):
-	prueba = np.exp(np.log(Ve) + (-t * 1/(R*C))) #Esto corresponde a la Ecuacion de la descarga del capacitor linealizada
-	return prueba
+    return  np.exp(np.log(Ve) + (-t * 1/(R*C))) #Esto corresponde a la Ecuacion de la descarga del capacitor linealizada
+	 
 
 def obtenerDatos():
     f = open("datos.txt", "r")
