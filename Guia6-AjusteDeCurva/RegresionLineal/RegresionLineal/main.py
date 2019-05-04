@@ -46,10 +46,11 @@ print('Ajuste Lineal')
 print('y = {} + {} x'.format(str(a0),str(a1)))
 
 # Comparacion de datos
-print('Valor Exp   Valor Teorico')
+print('Valor Exp   Valor Teorico      Error Rel. Aprox.')
 for index, x in enumerate(texp):
 	aux = evaluarTEnModelo(x)
-	print('{}   {}'.format(str(Vexp[index]), str(aux)))
+	errorRelativoAprox = abs(((Vexp[index] - aux)/Vexp[index])*100)
+	print('{} - {} - {}'.format(str(Vexp[index]), str(aux), str(errorRelativoAprox)) + "%")
 
 # GRAFICAMOS
 # Create the vectors X and Y
