@@ -52,14 +52,17 @@ for index, x in enumerate(texp):
 	errorRelativoAprox = abs(((Vexp[index] - aux)/Vexp[index])*100)
 	print("| {0:<13} |{1:<22} |{2:<22}".format(
             str(Vexp[index]), str(aux), str(errorRelativoAprox)+'%'))
-	#print('{} - {} - {}'.format(str(Vexp[index]), str(aux), str(errorRelativoAprox)) + "%")
 
 # GRAFICAMOS
 # Create the vectors X and Y
-x = np.array(range(10))
+x = np.array(range(11))
 y = a0 + a1*x
 
+#Graficamos la funcion linealizada de la ecuacion
+y2 = evaluarTEnModelo(x)
 # Create the plot
-plot.plot(x,y,label='Ajuste Lineal')
-plot.scatter(texp, Vexp)
+plot.plot(x,y,label='Ajuste Lineal',color='orange')
+plot.plot(x,y2,label='Funcion Linealizada',color='red')
+plot.scatter(texp, Vexp, label='Valores Experimentales')
+plot.legend()
 plot.show()
