@@ -11,7 +11,6 @@ Vexp = [] #Voltaje experimental
 
 def evaluarTEnModelo(t):
     return  np.exp(np.log(Ve) + (-t * 1/(R*C))) #Esto corresponde a la Ecuacion de la descarga del capacitor linealizada
-	 
 
 def obtenerDatos():
     f = open("datos.txt", "r")
@@ -46,11 +45,14 @@ print('Ajuste Lineal')
 print('y = {} + {} x'.format(str(a0),str(a1)))
 
 # Comparacion de datos
-print('Valor Exp   Valor Teorico      Error Rel. Aprox.')
+print("| {0:<13} |{1:^22} |{2:^22}".format(
+        "Valor Exp", "Valor Teorico", "Error Rel. Aprox"))
 for index, x in enumerate(texp):
 	aux = evaluarTEnModelo(x)
 	errorRelativoAprox = abs(((Vexp[index] - aux)/Vexp[index])*100)
-	print('{} - {} - {}'.format(str(Vexp[index]), str(aux), str(errorRelativoAprox)) + "%")
+	print("| {0:<13} |{1:<22} |{2:<22}".format(
+            str(Vexp[index]), str(aux), str(errorRelativoAprox)+'%'))
+	#print('{} - {} - {}'.format(str(Vexp[index]), str(aux), str(errorRelativoAprox)) + "%")
 
 # GRAFICAMOS
 # Create the vectors X and Y
