@@ -8,10 +8,14 @@ C = 0.00022 #Faradio (F)
 
 texp = [] #Tiempo experimental
 Vexp = [] #Voltaje experimental
-
+x0 = 0
+x1 = 10
 def evaluarTEnModelo(t):
     return  np.exp(np.log(Ve) + (-t * 1/(R*C))) #Esto corresponde a la Ecuacion de la descarga del capacitor linealizada
-
+def descargaCapacitor(x):
+    return Ve * (np.exp(-x * 1/(R*C)))
+def interpolacionPolNewtonPrimerGrado(x):
+    return descargaCapacitor(x0) + ((descargaCapacitor(x1) - descargaCapacitor(x0))/ (x1 - x0) ) * (x - x0)
 def obtenerDatos():
     f = open("datos.txt", "r")
     i = int()
@@ -52,7 +56,13 @@ for index, x in enumerate(texp):
 	errorRelativoAprox = abs(((Vexp[index] - aux)/Vexp[index])*100)
 	print("| {0:<13} |{1:<22} |{2:<22}".format(
             str(Vexp[index]), str(aux), str(errorRelativoAprox)+'%'))
-
+print("\n\n| {0:<13} |{1:^22} |{2:^22}".format(
+        "Valor Exp", "Valor Inter.Pol.Newton", "Error Rel. Aprox"))
+for index, x in enumerate(texp):
+	aux = interpolacionPolNewtonPrimerGrado(x)
+	errorRelativoAprox = abs(((Vexp[index] - aux)/Vexp[index])*100)
+	print("| {0:<13} |{1:<22} |{2:<22}".format(
+            str(Vexp[index]), str(aux), str(errorRelativoAprox)+'%'))
 # GRAFICAMOS
 # Create the vectors X and Y
 x = np.array(range(11))
