@@ -1,6 +1,6 @@
 #Importamos numpy para hacer utilización de funciones y constantes necesarias
 import numpy as np
-import threading
+
 from util import graficarCurvaMejorAjuste
 #importamos matplotlib.pyplot para poder graficar
 import matplotlib.pyplot as plot
@@ -80,7 +80,7 @@ print('y = {} + {} x'.format(str(a0),str(a1)))
 print('R*C(teórico): {}\nR*C(experimental) : {}\nError: {}%'.format(str(R*C), str(tau), str(abs((((R*C)-tau)/(R*C))*100))))
 
 #calculamos el tau experimental con Interpolación Pol. de Newton en primer grado
-tauNewton =  interpolacionPolNewtonPrimerGradoX(Vexp[0]*0.37,descargaCapacitor(Vexp[35]),descargaCapacitor(Vexp[34]), Vexp[35] , Vexp[34])
+tauNewton =  interpolacionPolNewtonPrimerGradoX(Vexp[0]*0.37,texp[35],texp[34], Vexp[35] , Vexp[34])
 
 # imprimimos resultados y errores
 print('\n-Interpolación Polinomial de Newton de Primer Grado')
@@ -88,24 +88,20 @@ print('R*C: {}\nError: {}%'.format(str(tauNewton),str(abs((((R*C)-tauNewton)/(R*
 
 # GRAFICAMOS
 # Create the vectors X and Y
-
-def graficar():
-        x = np.array(range(11))
-        #Graficamos la funcion linealizada de la ecuacion
-        y = funcionDeAjuste(tau, Ve, x)
-        # Create the plot
-        #plot.plot(x,y,label='Ajuste Lineal',color='orange')
-        print("\n-Gráfica:")
-        plot.plot(x,y,label='Funcion Linealizada',color='red')
-        plot.scatter(texp, Vexp, label='Valores Experimentales')
-        plot.legend()
-        plot.show()
+x = np.array(range(11))
+#Graficamos la funcion linealizada de la ecuacion
+y = funcionDeAjuste(tau, Ve, x)
+# Create the plot
+#plot.plot(x,y,label='Ajuste Lineal',color='orange')
+print("\n-Gráfica:")
+plot.plot(x,y,label='Funcion Linealizada',color='red')
+plot.scatter(texp, Vexp, label='Valores Experimentales')
+plot.legend()
+plot.show()
                 
 
+#Punto 5
+graficarCurvaMejorAjuste(texp,Vexp)
 
-# a = threading.Thread(target=graficar, name='Curva2')
-# a.start()
-d = threading.Thread(target=graficarCurvaMejorAjuste(texp,Vexp), name='Curva')
-d.start()
         
 
