@@ -1,6 +1,7 @@
 #Importamos numpy para hacer utilización de funciones y constantes necesarias
 import numpy as np
-
+import threading
+from util import graficarCurvaMejorAjuste
 #importamos matplotlib.pyplot para poder graficar
 import matplotlib.pyplot as plot
 
@@ -87,48 +88,24 @@ print('R*C: {}\nError: {}%'.format(str(tauNewton),str(abs((((R*C)-tauNewton)/(R*
 
 # GRAFICAMOS
 # Create the vectors X and Y
-x = np.array(range(11))
+
+def graficar():
+        x = np.array(range(11))
+        #Graficamos la funcion linealizada de la ecuacion
+        y = funcionDeAjuste(tau, Ve, x)
+        # Create the plot
+        #plot.plot(x,y,label='Ajuste Lineal',color='orange')
+        print("\n-Gráfica:")
+        plot.plot(x,y,label='Funcion Linealizada',color='red')
+        plot.scatter(texp, Vexp, label='Valores Experimentales')
+        plot.legend()
+        plot.show()
+                
 
 
-#Graficamos la funcion linealizada de la ecuacion
-y = funcionDeAjuste(tau, Ve, x)
-# Create the plot
-#plot.plot(x,y,label='Ajuste Lineal',color='orange')
-print("\n-Gráfica:")
-plot.plot(x,y,label='Funcion Linealizada',color='red')
-plot.scatter(texp, Vexp, label='Valores Experimentales')
-plot.legend()
-plot.show()
+# a = threading.Thread(target=graficar, name='Curva2')
+# a.start()
+d = threading.Thread(target=graficarCurvaMejorAjuste(texp,Vexp), name='Curva')
+d.start()
+        
 
-
-
-## Comparacion de datos
-#print("| {0:<13} |{1:^22} |{2:^22}".format(
-#        "Valor Exp", "Valor Teorico", "Error Rel. Aprox"))
-#for index, x in enumerate(texp):
-#	aux = funcionLinealizada(x)
-#	errorRelativoAprox = abs(((Vexp[index] - aux)/Vexp[index])*100)
-#	print("| {0:<13} |{1:<22} |{2:<22}".format(
-#            str(Vexp[index]), str(aux), str(errorRelativoAprox)+'%'))
-
-#print("\n\n| {0:<13} |{1:^22} |{2:^22}".format(
-#        "Valor Exp", "Valor Inter.Pol.Newton", "Error Rel. Aprox"))
-##for index, x in enumerate(Vexp):
-#	aux = interpolacionPolNewtonPrimerGrado(x)
-#	errorRelativoAprox = abs(((Vexp[index] - aux)/Vexp[index])*100)
-#	print("| {0:<13} |{1:<22} |{2:<22}".format(
-##    print ("pos:{} valor:{}".format(str(index),str(x)))
-#            str(Vexp[index]), str(aux), str(errorRelativoAprox)+'%'))
-## GRAFICAMOS
-## Create the vectors X and Y
-#x = np.array(range(11))
-#y = a0 + a1*x
-
-##Graficamos la funcion linealizada de la ecuacion
-#y2 = funcionLinealizada(x)
-## Create the plot
-##plot.plot(x,y,label='Ajuste Lineal',color='orange')
-#plot.plot(x,y2,label='Funcion Linealizada',color='red')
-#plot.scatter(texp, Vexp, label='Valores Experimentales')
-#plot.legend()
-#plot.show()
