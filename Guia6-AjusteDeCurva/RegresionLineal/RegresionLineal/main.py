@@ -14,8 +14,6 @@ C = 0.00022 #Faradio (F)
 
 texp = [] #Tiempo experimental
 Vexp = [] #Voltaje experimental
-#x0 = 2.5
-#x1 = 2.8
 
 # Esto corresponde a la Ecuacion de la descarga del capacitor linealizada
 def evaluarTEnModelo(t):
@@ -42,6 +40,8 @@ def descargaCapacitor(x):
 
 #def interpolacionPolNewtonPrimerGrado(x):
 #    return descargaCapacitor(x0) + ((descargaCapacitor(x1) - descargaCapacitor(x0))/ (x1 - x0) ) * (x - x0)
+
+# función para la obtención de los datos alojados en el .txt (originalmente .dat)
 def obtenerDatos():
     f = open("datos.txt", "r")
     i = int()
