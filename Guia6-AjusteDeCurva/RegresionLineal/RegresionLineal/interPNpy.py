@@ -7,7 +7,7 @@ Created on Fri May 10 01:02:39 2019
 
 
 
-def interpolacionPolNewtonPrimerGrado(fx,fx0,fx1,x0,x1):
+def interpolacionPolNewtonPrimerGradoX(fx,fx0,fx1,x0,x1):
     
     numerador = (x1 - x0) * (fx - fx0)
     denominador = fx1 - fx0
@@ -15,3 +15,4 @@ def interpolacionPolNewtonPrimerGrado(fx,fx0,fx1,x0,x1):
     
     return (numerador / denominador) + x0
     
+# 
