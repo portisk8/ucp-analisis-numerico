@@ -2,6 +2,7 @@
 import numpy as np
 import matplotlib.pyplot as plot
 from util import obtenerA0A1MinimoCuadrado
+from interPNpy import interpolacionPolNewtonPrimerGrado
 Ve = 10 #Voltios (V)
 R = 12000 #Ohm
 C = 0.00022 #Faradio (F)
@@ -12,7 +13,11 @@ x0 = 2.5
 x1 = 2.8
 def evaluarTEnModelo(t):
     return  np.exp(np.log(Ve) + (-t * 1/(R*C))) #Esto corresponde a la Ecuacion de la descarga del capacitor linealizada
-
+def obtenerTdeDescargaCap(Vc):
+    numerador = (np.log10(Vc / 10 ) * R * C)
+    denominador = np.log(np.e)
+    
+    return -1 * ( numerador / denominador )
 #Linealizacion
 def funcionLinealizada(t):
 	return np.log(Ve) + (-t * 1/(R*C))
@@ -21,8 +26,11 @@ def funcionDeAjuste(tau, Ve, t):
 	
 def descargaCapacitor(x):
     return Ve * (np.exp(-x * 1/(R*C)))
-def interpolacionPolNewtonPrimerGrado(x):
-    return descargaCapacitor(x0) + ((descargaCapacitor(x1) - descargaCapacitor(x0))/ (x1 - x0) ) * (x - x0)
+#Interpolación Polinomial de Newton de primer grado
+    
+
+#def interpolacionPolNewtonPrimerGrado(x):
+#    return descargaCapacitor(x0) + ((descargaCapacitor(x1) - descargaCapacitor(x0))/ (x1 - x0) ) * (x - x0)
 def obtenerDatos():
     f = open("datos.txt", "r")
     i = int()
@@ -49,13 +57,14 @@ a1, a0 = obtenerA0A1MinimoCuadrado(texp,y)
 tau = -1/a1
 Ve = np.exp(a0)
 
-
+tauNewton =  interpolacionPolNewtonPrimerGrado(Ve*0.37,descargaCapacitor(3.69),descargaCapacitor(3.71), 3.71 , 3.69)
 print('Ajuste Lineal')
 print('y = {} + {} x'.format(str(a0),str(a1)))
 
 print('R*C(teórico): {}\nR*C(experimental) : {}\nError: {}%'.format(str(R*C), str(tau), str(abs((((R*C)-tau)/(R*C))*100))))
 
-
+print('Interpolación Polinomial de Newton de Primer Grado')
+print('R*c: {}'.format(str(tauNewton)))
 # GRAFICAMOS
 # Create the vectors X and Y
 x = np.array(range(11))
@@ -81,13 +90,13 @@ plot.show()
 #	print("| {0:<13} |{1:<22} |{2:<22}".format(
 #            str(Vexp[index]), str(aux), str(errorRelativoAprox)+'%'))
 
-print("\n\n| {0:<13} |{1:^22} |{2:^22}".format(
-        "Valor Exp", "Valor Inter.Pol.Newton", "Error Rel. Aprox"))
-for index, x in enumerate(texp):
-	aux = interpolacionPolNewtonPrimerGrado(x)
-	errorRelativoAprox = abs(((Vexp[index] - aux)/Vexp[index])*100)
-	print("| {0:<13} |{1:<22} |{2:<22}".format(
-            str(Vexp[index]), str(aux), str(errorRelativoAprox)+'%'))
+#print("\n\n| {0:<13} |{1:^22} |{2:^22}".format(
+#        "Valor Exp", "Valor Inter.Pol.Newton", "Error Rel. Aprox"))
+#for index, x in enumerate(texp):
+#	aux = interpolacionPolNewtonPrimerGrado(x)
+#	errorRelativoAprox = abs(((Vexp[index] - aux)/Vexp[index])*100)
+#	print("| {0:<13} |{1:<22} |{2:<22}".format(
+#            str(Vexp[index]), str(aux), str(errorRelativoAprox)+'%'))
 ## GRAFICAMOS
 ## Create the vectors X and Y
 #x = np.array(range(11))
