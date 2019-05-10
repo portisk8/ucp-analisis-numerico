@@ -1,7 +1,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plot
-from util import obtenerA0A1MinimoCuadrado
+from a0a1MinCuad import obtenerA0A1MinimoCuadrado
 from interPNpy import interpolacionPolNewtonPrimerGrado
 Ve = 10 #Voltios (V)
 R = 12000 #Ohm
@@ -9,8 +9,8 @@ C = 0.00022 #Faradio (F)
 
 texp = [] #Tiempo experimental
 Vexp = [] #Voltaje experimental
-x0 = 2.5
-x1 = 2.8
+#x0 = 2.5
+#x1 = 2.8
 def evaluarTEnModelo(t):
     return  np.exp(np.log(Ve) + (-t * 1/(R*C))) #Esto corresponde a la Ecuacion de la descarga del capacitor linealizada
 def obtenerTdeDescargaCap(Vc):
@@ -57,14 +57,14 @@ a1, a0 = obtenerA0A1MinimoCuadrado(texp,y)
 tau = -1/a1
 Ve = np.exp(a0)
 
-tauNewton =  interpolacionPolNewtonPrimerGrado(Ve*0.37,descargaCapacitor(3.69),descargaCapacitor(3.71), 3.71 , 3.69)
-print('Ajuste Lineal')
+tauNewton =  interpolacionPolNewtonPrimerGrado(Vexp[0]*0.37,descargaCapacitor(Vexp[35]),descargaCapacitor(Vexp[34]), Vexp[35] , Vexp[34])
+print('\n-Ajuste Lineal')
 print('y = {} + {} x'.format(str(a0),str(a1)))
 
 print('R*C(teórico): {}\nR*C(experimental) : {}\nError: {}%'.format(str(R*C), str(tau), str(abs((((R*C)-tau)/(R*C))*100))))
 
-print('Interpolación Polinomial de Newton de Primer Grado')
-print('R*c: {}'.format(str(tauNewton)))
+print('\n-Interpolación Polinomial de Newton de Primer Grado')
+print('R*C: {}\nError: {}%'.format(str(tauNewton),str(abs((((R*C)-tauNewton)/(R*C))*100))))
 # GRAFICAMOS
 # Create the vectors X and Y
 x = np.array(range(11))
@@ -92,10 +92,11 @@ plot.show()
 
 #print("\n\n| {0:<13} |{1:^22} |{2:^22}".format(
 #        "Valor Exp", "Valor Inter.Pol.Newton", "Error Rel. Aprox"))
-#for index, x in enumerate(texp):
+##for index, x in enumerate(Vexp):
 #	aux = interpolacionPolNewtonPrimerGrado(x)
 #	errorRelativoAprox = abs(((Vexp[index] - aux)/Vexp[index])*100)
 #	print("| {0:<13} |{1:<22} |{2:<22}".format(
+##    print ("pos:{} valor:{}".format(str(index),str(x)))
 #            str(Vexp[index]), str(aux), str(errorRelativoAprox)+'%'))
 ## GRAFICAMOS
 ## Create the vectors X and Y
