@@ -107,5 +107,6 @@ venv.bak/
 **/.vscode
 **/.vs
 **/*.pyproj
+**/*.pyproj.user
 **/*.sln
 
