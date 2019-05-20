@@ -82,7 +82,7 @@ class Integral(object):
 		func = sympy.sympify(func)
 		print (func)
 		a, b = self.sortAB(a, b)
-		h = (b-a)/n
+		h = (b-a)/1
 		return ((3*h)/8) * func.subs({'x': a}).evalf() + 3*func.subs({'x': (2*a + b)/3}).evalf() + 3*func.subs({'x': (a + 2*b)/3}).evalf() + + 3*func.subs({'x': b}).evalf()
 
 	def sortAB(self,a,b):
